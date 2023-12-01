@@ -23,7 +23,7 @@ import "admin/assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "admin/assets/scss/argon-dashboard-react.scss";
 
-import AdminLayout from "layouts/Admin.js";
+import AdminLayout from "admin/layouts/Admin.js";
 import AuthLayout from "admin/layouts/Auth.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
