@@ -22,6 +22,7 @@ import Register from "admin/views/examples/Register.js";
 import Login from "admin/views/examples/Login.js";
 import Tables from "admin/views/examples/Tables.js";
 import Icons from "admin/views/examples/Icons.js";
+import Home from "./public/Pages/Home";
 
 var routes = [
   {
