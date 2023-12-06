@@ -9,14 +9,12 @@ import Appointment from "./Pages/Appointment";
 const Index = () => {
     return (
         <div className="public">
-            <Router basename="/Health-Plus">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/legal" element={<Legal />} />
-                    <Route path="/appointment" element={<Appointment />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/legal" element={<Legal />} />
+                <Route path="/appointment" element={<Appointment />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </div>
     );
 };
