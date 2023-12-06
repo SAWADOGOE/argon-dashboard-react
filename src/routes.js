@@ -23,6 +23,8 @@ import Login from "admin/views/examples/Login.js";
 import Tables from "admin/views/examples/Tables.js";
 import Icons from "admin/views/examples/Icons.js";
 import Home from "./public/Pages/Home";
+import Pharmacie from "admin/views/examples/Pharmacie";
+import Hopital from "admin/views/examples/Hopital";
 
 var routes = [
   {
@@ -60,6 +62,23 @@ var routes = [
     component: <Tables />,
     layout: "/admin",
   },
+
+  {
+    path: "/pharmacie",
+    name: "Pharmacie",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <Pharmacie/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/hopital",
+    name: "Hopital",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <Hopital/>,
+    layout: "/admin",
+  },
+
   {
     path: "/login",
     name: "Login",

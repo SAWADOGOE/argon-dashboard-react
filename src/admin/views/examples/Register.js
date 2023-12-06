@@ -17,6 +17,7 @@
 */
 
 // reactstrap components
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -30,16 +31,25 @@ import {
   InputGroup,
   Row,
   Col,
+  Label,
 } from "reactstrap";
 
 const Register = () => {
+
+  const [selectedType, setSelectedType] = useState('');
+
+  const handleTypeChange = (e) => {
+    setSelectedType(e.target.value);
+  };
+
+
   return (
     <>
       <Col lg="6" md="8">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-4">
-              <small>Sign up with</small>
+              <small>Inscrivez-vous avec</small>
             </div>
             <div className="text-center">
               <Button
@@ -80,8 +90,41 @@ const Register = () => {
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign up with credentials</small>
+              <small>Ou inscrivez-vous avec des informations d’identification</small>
             </div>
+
+            <FormGroup>
+                
+                <div>
+                  <FormGroup row>
+                <Col sm={10}>
+                  <FormGroup check inline>
+                    <Label check>
+                      <Input type="radio" name="type" value="client" onChange={handleTypeChange} />{' '}
+                      Client
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check inline>
+                    <Label check>
+                      <Input type="radio" name="type" value="hopital" onChange={handleTypeChange} />{' '}
+                      Hôpital
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check inline>
+                    <Label check>
+                      <Input type="radio" name="type" value="pharmacie" onChange={handleTypeChange} />{' '}
+                      Pharmacie
+                    </Label>
+                  </FormGroup>
+                </Col>
+              </FormGroup>
+                </div>
+              </FormGroup>
+
+
+              
+
+
             <Form role="form">
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
@@ -90,7 +133,18 @@ const Register = () => {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Name" type="text" />
+                  <Input placeholder="Nom" type="text" />
+                </InputGroup>
+              </FormGroup>
+
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-hat-3" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder="Prenom" type="text" />
                 </InputGroup>
               </FormGroup>
               <FormGroup>
@@ -107,6 +161,38 @@ const Register = () => {
                   />
                 </InputGroup>
               </FormGroup>
+
+
+              {selectedType === 'hopital' && (
+                // Ajoutez ici des champs supplémentaires pour l'hôpital
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-building" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Adresse de l'hôpital" type="text" />
+                  </InputGroup>
+                </FormGroup>
+              )}
+
+
+{selectedType === 'pharmacie' && (
+                // Ajoutez ici des champs supplémentaires pour l'hôpital
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-building" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Adresse de la pharmacie" type="text" />
+                  </InputGroup>
+                </FormGroup>
+              )}
+
+
               <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -115,7 +201,7 @@ const Register = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Password"
+                    placeholder="Mot de passe"
                     type="password"
                     autoComplete="new-password"
                   />
@@ -140,9 +226,9 @@ const Register = () => {
                       htmlFor="customCheckRegister"
                     >
                       <span className="text-muted">
-                        I agree with the{" "}
+                        Je suis d’accord avec la{" "}
                         <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          Privacy Policy
+                          politique de confidentialité
                         </a>
                       </span>
                     </label>
