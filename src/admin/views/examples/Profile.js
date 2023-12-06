@@ -90,7 +90,7 @@ const Profile = () => {
                       </div>
                       <div>
                         <span className="heading">89</span>
-                        <span className="description">Comments</span>
+                        <span className="description">Commentaires</span>
                       </div>
                     </div>
                   </div>
