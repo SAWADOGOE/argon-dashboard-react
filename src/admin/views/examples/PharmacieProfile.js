@@ -169,9 +169,9 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lucky.jesse"
+                              defaultValue="pharmacie du coeur"
                               id="input-username"
-                              placeholder="Username"
+                              placeholder="pharmacie du coeur"
                               type="text"
                             />
                           </FormGroup>
@@ -187,7 +187,7 @@ import {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="jesse@example.com"
+                              placeholder="coeur@example.com"
                               type="email"
                             />
                           </FormGroup>
@@ -204,9 +204,9 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Lucky"
+                              defaultValue="10 metres de la banque BCB"
                               id="input-first-name"
-                              placeholder="First name"
+                              placeholder="10 metres de la banque BCB"
                               type="text"
                             />
                           </FormGroup>
@@ -221,9 +221,9 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Jesse"
+                              defaultValue="67542317"
                               id="input-last-name"
-                              placeholder="Last name"
+                              placeholder="67542317"
                               type="text"
                             />
                           </FormGroup>
@@ -233,7 +233,7 @@ import {
                     <hr className="my-4" />
                     {/* Address */}
                     <h6 className="heading-small text-muted mb-4">
-                      Contact information
+                     Ajouter un produit
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -243,11 +243,11 @@ import {
                               className="form-control-label"
                               htmlFor="input-address"
                             >
-                              Address
+                              Nom du produit
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                              defaultValue="Paracetamol"
                               id="input-address"
                               placeholder="Home Address"
                               type="text"
@@ -257,55 +257,17 @@ import {
                       </Row>
                       <Row>
                         <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              City
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="New York"
-                              id="input-city"
-                              placeholder="City"
-                              type="text"
-                            />
-                          </FormGroup>
+                        <Button
+                        color="primary"
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                        size="sm"
+                      >
+                        Ajouter
+                      </Button>
                         </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Country
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="United States"
-                              id="input-country"
-                              placeholder="Country"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              id="input-postal-code"
-                              placeholder="Postal code"
-                              type="number"
-                            />
-                          </FormGroup>
-                        </Col>
+                        
+                        
                       </Row>
                     </div>
                     <hr className="my-4" />

@@ -182,7 +182,7 @@ import {
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email de la pharmacie
+                              Email du patient
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -200,7 +200,7 @@ import {
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              Adresse de la pharmacie
+                              Prenom du patient
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -217,14 +217,14 @@ import {
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Numero de la pharmacie
+                              Telephone du patient
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Jesse"
+                              defaultValue="Telephone"
                               id="input-last-name"
                               placeholder="Last name"
-                              type="text"
+                              type="number"
                             />
                           </FormGroup>
                         </Col>
@@ -306,6 +306,25 @@ import {
                               type="number"
                             />
                           </FormGroup>
+
+
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-city"
+                            >
+                              Numero de telephone
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue="New York"
+                              id="input-city"
+                              placeholder="numero assurance"
+                              type="number"
+                            />
+                          </FormGroup>
+
+
                         </Col>
                         <Col lg="4">
                           <FormGroup>
@@ -356,15 +375,14 @@ import {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Listes des produits disponible dans la pharmacie</h3>
+                <h3 className="mb-0">mes demande de remboursement</h3>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prenom</th>
-                    <th scope="col">Telephone</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">Date de demande</th>
+                    <th scope="col">Date de reponse</th>
+                    <th scope="col">Statut</th>
                     <th scope="col">Action</th>
                     <th scope="col" />
                   </tr>
@@ -394,14 +412,7 @@ import {
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-warning" />
-                        275353435
-                      </Badge>
-                    </td>
-
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        emmanuel@gmail.com
+                        Accepter
                       </Badge>
                     </td>
                     
