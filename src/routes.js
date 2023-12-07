@@ -25,6 +25,10 @@ import Icons from "admin/views/examples/Icons.js";
 import Home from "./public/Pages/Home";
 import Pharmacie from "admin/views/examples/Pharmacie";
 import Hopital from "admin/views/examples/Hopital";
+import Remboursement from "admin/views/examples/Remboursement";
+import PharmacieProfile from "admin/views/examples/PharmacieProfile";
+import Patients from "admin/views/examples/Patients";
+import PatientProfil from "admin/views/examples/PatientProfil";
 
 var routes = [
   {
@@ -42,19 +46,28 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-  },
-  {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: <Profile />,
     layout: "/admin",
   },
+  {
+    path: "/pharmacie-profile",
+    name: "PharmacieProfile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <PharmacieProfile/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/patient-profile",
+    name: "PatientProfil",
+    icon: "ni ni-single-02 text-yellow",
+    component: <PatientProfil/>,
+    layout: "/admin",
+  },
+
   {
     path: "/tables",
     name: "Tables",
@@ -66,16 +79,33 @@ var routes = [
   {
     path: "/pharmacie",
     name: "Pharmacie",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "ni ni-shop text-blue",
     component: <Pharmacie/>,
+    layout: "/admin",
+  },
+
+
+  {
+    path: "/patients",
+    name: "Patients",
+    icon: "ni ni-shop text-blue",
+    component: <Patients/>,
     layout: "/admin",
   },
 
   {
     path: "/hopital",
     name: "Hopital",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "ni ni-sound-wave text-red",
     component: <Hopital/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/reboursement",
+    name: "Remboursement",
+    icon: "ni ni-umbrella-13 text-blue",
+    component: <Remboursement/>,
     layout: "/admin",
   },
 
