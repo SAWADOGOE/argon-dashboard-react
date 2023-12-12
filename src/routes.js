@@ -17,18 +17,19 @@
 */
 import Index from "admin/views/Index.js";
 import Profile from "admin/views/examples/Profile.js";
-import Maps from "admin/views/examples/Maps.js";
 import Register from "admin/views/examples/Register.js";
 import Login from "admin/views/examples/Login.js";
 import Tables from "admin/views/examples/Tables.js";
 import Icons from "admin/views/examples/Icons.js";
-import Home from "./public/Pages/Home";
 import Pharmacie from "admin/views/examples/Pharmacie";
 import Hopital from "admin/views/examples/Hopital";
-import Remboursement from "admin/views/examples/Remboursement";
+import RemboursementList from "admin/views/examples/RemboursementList";
 import PharmacieProfile from "admin/views/examples/PharmacieProfile";
 import Patients from "admin/views/examples/Patients";
 import PatientProfil from "admin/views/examples/PatientProfil";
+import HopitalProfile from "./admin/views/examples/HopitalProfile";
+import ProfileMedecin from "./admin/views/examples/ProfileMedecin";
+import Exo from "./admin/views/examples/Exo";
 
 var routes = [
   {
@@ -52,6 +53,15 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
+
+  {
+    path: "/patient-profile",
+    name: "PatientProfil",
+    icon: "ni ni-single-02 text-yellow",
+    component: <PatientProfil/>,
+    layout: "/admin",
+  },
+
   {
     path: "/pharmacie-profile",
     name: "PharmacieProfile",
@@ -60,11 +70,20 @@ var routes = [
     layout: "/admin",
   },
 
+
   {
-    path: "/patient-profile",
-    name: "PatientProfil",
+    path: "/hopital-profile",
+    name: "HopitalProfile",
     icon: "ni ni-single-02 text-yellow",
-    component: <PatientProfil/>,
+    component: <HopitalProfile/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/medecin-profile",
+    name: "Medecin-profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <ProfileMedecin/>,
     layout: "/admin",
   },
 
@@ -77,13 +96,12 @@ var routes = [
   },
 
   {
-    path: "/pharmacie",
+    path: "/pharmacie/index",
     name: "Pharmacie",
     icon: "ni ni-shop text-blue",
     component: <Pharmacie/>,
     layout: "/admin",
   },
-
 
   {
     path: "/patients",
@@ -102,12 +120,14 @@ var routes = [
   },
 
   {
-    path: "/reboursement",
-    name: "Remboursement",
+    path: "/reboursement-list",
+    name: "Remboursement liste",
     icon: "ni ni-umbrella-13 text-blue",
-    component: <Remboursement/>,
+    component: <RemboursementList/>,
     layout: "/admin",
   },
+
+
 
   {
     path: "/login",
@@ -122,6 +142,14 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
     layout: "/auth",
+  },
+
+  {
+    path: "/exo/jjj",
+    name: "Exo",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Exo/>,
+    layout: "/hop",
   },
 ];
 export default routes;

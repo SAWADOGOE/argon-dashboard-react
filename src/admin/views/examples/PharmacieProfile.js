@@ -253,6 +253,54 @@ import {
                               type="text"
                             />
                           </FormGroup>
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-city"
+                            >
+                              description
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="description"
+                                id="input-city"
+                                placeholder="description du produit"
+                                type="text"
+                            />
+                          </FormGroup>
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-city"
+                            >
+                              Prix
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="prix du produit"
+                                id="input-city"
+                                placeholder="prix du produit"
+                                type="number"
+                            />
+                          </FormGroup>
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-city"
+                            >
+                              Quantité
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="New York"
+                                id="input-city"
+                                placeholder="quantité"
+                                type="number"
+                            />
+                          </FormGroup>
                         </Col>
                       </Row>
                       <Row>

@@ -39,8 +39,11 @@ import {
   } from "reactstrap";
   // core components
   import UserHeader from "admin/components/Headers/UserHeader.js";
+import {useNavigate} from "react-router-dom";
   
   const PatientProfil = () => {
+
+    let navigate = useNavigate()
     return (
       <>
         <UserHeader />
@@ -138,16 +141,16 @@ import {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Compte pharmacie</h3>
+                      <h3 className="mb-0">Compte patient</h3>
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button
                         color="primary"
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={navigate('/admin/reboursement')}
                         size="sm"
                       >
-                        Polices d'assurance
+                        Demande de remboursement
                       </Button>
                     </Col>
                   </Row>
@@ -169,7 +172,7 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lucky.jesse"
+                              defaultValue="lucky jesse"
                               id="input-username"
                               placeholder="Username"
                               type="text"
@@ -210,6 +213,25 @@ import {
                               type="text"
                             />
                           </FormGroup>
+
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-last-name"
+                            >
+                              Mot de passe
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="Telephone"
+                                id="input-last-name"
+                                placeholder="password"
+                                type="password"
+                            />
+                          </FormGroup>
+
+
                         </Col>
                         <Col lg="6">
                           <FormGroup>
@@ -227,6 +249,25 @@ import {
                               type="number"
                             />
                           </FormGroup>
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-last-name"
+                            >
+                              Sexe
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="M"
+                                id="input-last-name"
+                                placeholder="Last name"
+                                type="select"
+                            />
+                          </FormGroup>
+
+
+
                         </Col>
                       </Row>
                     </div>
@@ -240,15 +281,6 @@ import {
                         size="sm"
                       >
                         Polices d'assurance
-                      </Button>
-
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Modifier la police d'assurance
                       </Button>
                     </h6>
                     <div className="pl-lg-4">
@@ -269,6 +301,8 @@ import {
                               type="text"
                             />
                           </FormGroup>
+
+
                         </Col>
                       </Row>
                       <Row>
@@ -289,23 +323,6 @@ import {
                             />
                           </FormGroup>
 
-                    
-
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              Numero de d'assurance sociale
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="New York"
-                              id="input-city"
-                              placeholder="numero assurance"
-                              type="number"
-                            />
-                          </FormGroup>
 
 
                           <FormGroup>
@@ -313,7 +330,7 @@ import {
                               className="form-control-label"
                               htmlFor="input-city"
                             >
-                              Numero de telephone
+                              Numero d'assurance
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -342,6 +359,22 @@ import {
                               type="date"
                             />
                           </FormGroup>
+
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-city"
+                            >
+                              Numero de telephone
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="New York"
+                                id="input-city"
+                                placeholder="numero assurance"
+                                type="number"
+                            />
+                          </FormGroup>
                         </Col>
                         <Col lg="4">
                           <FormGroup>
@@ -358,6 +391,8 @@ import {
                               type="number"
                             />
                           </FormGroup>
+
+
                         </Col>
                       </Row>
                     </div>
@@ -374,6 +409,136 @@ import {
         <Row>
           <div className="col">
             <Card className="shadow">
+
+
+
+              <CardHeader className="border-0">
+                <h3 className="mb-0">mes Traitements</h3>
+              </CardHeader>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Cout</th>
+                  <th scope="col">Montant reclame</th>
+                  <th scope="col">Statut reclamation</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Prestataire</th>
+
+                  <th scope="col">action</th>
+                  <th scope="col" />
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">
+                    <Media className="align-items-center">
+                      <a
+                          className="avatar rounded-circle mr-3"
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                      >
+                        <img
+                            alt="..."
+                            src={require("../../assets/img/theme/bootstrap.jpg")}
+                        />
+                      </a>
+                      <Media>
+                          <span className="mb-0 text-sm">
+                          SAWADOGO
+                          </span>
+                      </Media>
+                    </Media>
+                  </th>
+                  <td>Emmanuel</td>
+                  <td>
+                    <Badge color="" className="badge-dot mr-4">
+                      <i className="bg-warning" />
+                      Accepter
+                    </Badge>
+                  </td>
+
+
+                  <td>
+                    <Badge color="" className="badge-dot mr-4">
+                      <i className="bg-warning" />
+                      Accepter
+                    </Badge>
+                  </td>
+
+
+                  <td>
+                    <Badge color="" className="badge-dot mr-4">
+                      <i className="bg-warning" />
+                      Accepter
+                    </Badge>
+                  </td>
+
+                  <td>
+                    <Badge color="" className="badge-dot mr-4">
+                      <i className="bg-warning" />
+                      Accepter
+                    </Badge>
+                  </td>
+
+
+                  <td>
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">60%</span>
+                      <div>
+                        <Progress
+                            max="100"
+                            value="60"
+                            barClassName="bg-danger"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="text-right">
+                    <UncontrolledDropdown>
+                      <DropdownToggle
+                          className="btn-icon-only text-light"
+                          href="#pablo"
+                          role="button"
+                          size="sm"
+                          color=""
+                          onClick={(e) => e.preventDefault()}
+                      >
+                        <i className="fas fa-ellipsis-v" />
+                      </DropdownToggle>
+                      <DropdownMenu className="dropdown-menu-arrow" right>
+                        <DropdownItem
+                            href="#pablo"
+                            onClick={(e) => e.preventDefault()}
+                        >
+                          Editer
+                        </DropdownItem>
+                        <DropdownItem
+                            href="#pablo"
+                            onClick={(e) => e.preventDefault()}
+                        >
+                          Supprimer
+                        </DropdownItem>
+                        <DropdownItem
+                            href="#pablo"
+                            onClick={(e) => e.preventDefault()}
+                        >
+                          Something else here
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </td>
+                </tr>
+
+
+
+
+                </tbody>
+              </Table>
+
+
+
+
               <CardHeader className="border-0">
                 <h3 className="mb-0">mes demande de remboursement</h3>
               </CardHeader>

@@ -1,3 +1,21 @@
+/*!
+
+=========================================================
+* Argon Dashboard React - v1.2.3
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+// reactstrap components
 import {
     Badge,
     Card,
@@ -19,10 +37,8 @@ import {
   } from "reactstrap";
   // core components
   import Header from "admin/components/Headers/Header.js";
-
-  const Hopital = () => {
-
-
+  
+  const RemboursementList = () => {
     return (
       <>
         <Header />
@@ -33,7 +49,7 @@ import {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Listes des hopitaux agréer</h3>
+                  <h3 className="mb-0">Listes des remboursements</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
@@ -42,6 +58,7 @@ import {
                       <th scope="col">adresse</th>
                       <th scope="col">Telephone</th>
                       <th scope="col">Email</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Action</th>
                       <th scope="col" />
                     </tr>
@@ -218,6 +235,9 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
+  
+  
+  
   
                     <tr>
                       <th scope="row">
@@ -1578,7 +1598,7 @@ import {
             <div className="col">
               <Card className="bg-default shadow">
                 <CardHeader className="bg-transparent border-0">
-                  <h3 className="text-white mb-0">Listes des medecins</h3>
+                  <h3 className="text-white mb-0">Card tables</h3>
                 </CardHeader>
                 <Table
                   className="align-items-center table-dark table-flush"
@@ -2350,5 +2370,5 @@ import {
     );
   };
   
-  export default Hopital;
+  export default RemboursementList;
   
