@@ -23,7 +23,7 @@ import {
 import UserHeader from "admin/components/Headers/UserHeader.js";
 import {useNavigate} from "react-router-dom";
 
-const Exo = () => {
+const Reclamation = () => {
 
     let navigate = useNavigate()
     return (
@@ -123,18 +123,9 @@ const Exo = () => {
                             <CardHeader className="bg-white border-0">
                                 <Row className="align-items-center">
                                     <Col xs="8">
-                                        <h3 className="mb-0">Compte patient</h3>
+                                        <h3 className="mb-0">Formulaire de remboursement</h3>
                                     </Col>
-                                    <Col className="text-right" xs="4">
-                                        <Button
-                                            color="primary"
-                                            href="#pablo"
-                                            onClick={navigate('/admin/reboursement')}
-                                            size="sm"
-                                        >
-                                            Demande de remboursement
-                                        </Button>
-                                    </Col>
+
                                 </Row>
                             </CardHeader>
                             <CardBody>
@@ -157,7 +148,7 @@ const Exo = () => {
                                                         defaultValue="lucky jesse"
                                                         id="input-username"
                                                         placeholder="Username"
-                                                        type="text"
+                                                        type="select"
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -167,13 +158,13 @@ const Exo = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-email"
                                                     >
-                                                        Email du patient
+                                                        date
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
                                                         id="input-email"
                                                         placeholder="jesse@example.com"
-                                                        type="email"
+                                                        type="date"
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -185,14 +176,14 @@ const Exo = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-first-name"
                                                     >
-                                                        Prenom du patient
+                                                        Montant total
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
                                                         defaultValue="Lucky"
                                                         id="input-first-name"
                                                         placeholder="First name"
-                                                        type="text"
+                                                        type="number"
                                                     />
                                                 </FormGroup>
 
@@ -202,17 +193,59 @@ const Exo = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
                                                     >
-                                                        Mot de passe
+                                                        Montant reclamer
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
                                                         defaultValue="Telephone"
                                                         id="input-last-name"
                                                         placeholder="password"
-                                                        type="password"
+                                                        type="number"
                                                     />
                                                 </FormGroup>
 
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-name"
+                                                    >
+                                                        ordonnance 1
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        id="input-last-name"
+                                                        placeholder="Last name"
+                                                        type="file"
+                                                    />
+                                                </FormGroup>
+
+
+
+
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-name"
+                                                    >
+                                                        ordonnance 2
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        id="input-last-name"
+                                                        placeholder="Last name"
+                                                        type="file"
+                                                    />
+                                                </FormGroup>
+
+
+                                                <Button
+                                                    color="primary"
+                                                    href="#pablo"
+                                                    onClick={(e) => e.preventDefault()}
+                                                    size="sm"
+                                                >
+                                                    Envoyer
+                                                </Button>
 
                                             </Col>
                                             <Col lg="6">
@@ -232,6 +265,8 @@ const Exo = () => {
                                                     />
                                                 </FormGroup>
 
+
+
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
@@ -250,161 +285,47 @@ const Exo = () => {
 
 
 
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                    <hr className="my-4" />
-                                    {/* Address */}
-                                    <h6 className="heading-small text-muted mb-4">
-                                        <Button
-                                            color="primary"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                            size="sm"
-                                        >
-                                            Polices d'assurance
-                                        </Button>
-
-                                        <Button
-                                            color="primary"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                            size="sm"
-                                        >
-                                            Modifier la police d'assurance
-                                        </Button>
-                                    </h6>
-                                    <div className="pl-lg-4">
-                                        <Row>
-                                            <Col md="12">
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-address"
-                                                    >
-                                                        type de couverture
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="Type de couverture"
-                                                        id="input-address"
-                                                        placeholder="Type de couverture"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
-
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col lg="4">
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-city"
-                                                    >
-                                                        Date debut
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="New York"
-                                                        id="input-city"
-                                                        placeholder="date de debut"
-                                                        type="date"
-                                                    />
-                                                </FormGroup>
-
-
 
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-city"
+                                                        htmlFor="input-last-name"
                                                     >
-                                                        Numero d'assurance
+                                                        Ordonnace 2
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
-                                                        defaultValue="New York"
-                                                        id="input-city"
-                                                        placeholder="numero assurance"
-                                                        type="number"
-                                                    />
-                                                </FormGroup>
-
-
-                                            </Col>
-                                            <Col lg="4">
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-country"
-                                                    >
-                                                        date fin
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="United States"
-                                                        id="input-country"
-                                                        placeholder="Country"
-                                                        type="date"
-                                                    />
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-city"
-                                                    >
-                                                        Numero de telephone
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="New York"
-                                                        id="input-city"
-                                                        placeholder="numero assurance"
-                                                        type="number"
-                                                    />
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-city"
-                                                    >
-                                                        Ordonance
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue=""
-                                                        id="input-city"
-                                                        placeholder="numero assurance"
+                                                        id="input-last-name"
+                                                        placeholder="Last name"
                                                         type="file"
                                                     />
                                                 </FormGroup>
-                                            </Col>
-                                            <Col lg="4">
+
+
+
+
+
+
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-country"
+                                                        htmlFor="input-last-name"
                                                     >
-                                                        prime
+                                                        ordonnance 2
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
-                                                        id="input-postal-code"
-                                                        placeholder="Postal code"
-                                                        type="number"
+                                                        id="input-last-name"
+                                                        placeholder="Last name"
+                                                        type="file"
                                                     />
                                                 </FormGroup>
+
 
 
                                             </Col>
                                         </Row>
                                     </div>
-                                    <hr className="my-4" />
-                                    {/* Description */}
 
                                 </Form>
                             </CardBody>
@@ -413,113 +334,10 @@ const Exo = () => {
 
                 </Row>
             </Container>
-            <Row>
-                <div className="col">
-                    <Card className="shadow">
-                        <CardHeader className="border-0">
-                            <h3 className="mb-0">mes demande de remboursement</h3>
-                        </CardHeader>
-                        <Table className="align-items-center table-flush" responsive>
-                            <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Date de demande</th>
-                                <th scope="col">Date de reponse</th>
-                                <th scope="col">Statut</th>
-                                <th scope="col">Action</th>
-                                <th scope="col" />
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <Media className="align-items-center">
-                                        <a
-                                            className="avatar rounded-circle mr-3"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            <img
-                                                alt="..."
-                                                src={require("../../assets/img/theme/bootstrap.jpg")}
-                                            />
-                                        </a>
-                                        <Media>
-                          <span className="mb-0 text-sm">
-                          SAWADOGO
-                          </span>
-                                        </Media>
-                                    </Media>
-                                </th>
-                                <td>Emmanuel</td>
-                                <td>
-                                    <Badge color="" className="badge-dot mr-4">
-                                        <i className="bg-warning" />
-                                        Accepter
-                                    </Badge>
-                                </td>
-
-
-                                <td>
-                                    <div className="d-flex align-items-center">
-                                        <span className="mr-2">60%</span>
-                                        <div>
-                                            <Progress
-                                                max="100"
-                                                value="60"
-                                                barClassName="bg-danger"
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="text-right">
-                                    <UncontrolledDropdown>
-                                        <DropdownToggle
-                                            className="btn-icon-only text-light"
-                                            href="#pablo"
-                                            role="button"
-                                            size="sm"
-                                            color=""
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            <i className="fas fa-ellipsis-v" />
-                                        </DropdownToggle>
-                                        <DropdownMenu className="dropdown-menu-arrow" right>
-                                            <DropdownItem
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                Editer
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                Supprimer
-                                            </DropdownItem>
-                                            <DropdownItem
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                Something else here
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                </td>
-                            </tr>
-
-
-
-
-                            </tbody>
-                        </Table>
-                    </Card>
-                </div>
-            </Row>
-
 
 
         </>
     );
 };
 
-export default Exo;
+export default Reclamation;

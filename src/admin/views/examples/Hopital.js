@@ -17,7 +17,6 @@ import {
     Row,
     UncontrolledTooltip,
   } from "reactstrap";
-  // core components
   import Header from "admin/components/Headers/Header.js";
 
   const Hopital = () => {

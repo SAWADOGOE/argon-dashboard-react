@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
     Button,
     Card,
@@ -37,11 +18,182 @@ import {
     DropdownItem,
     DropdownMenu
   } from "reactstrap";
-  // core components
   import UserHeader from "admin/components/Headers/UserHeader.js";
+import {useEffect, useState} from "react";
+import {deleteData, getData, saveData} from "../../../services";
+import axios, {put} from "axios";
+import {useNavigate} from "react-router-dom";
   
   const PharmacieProfile = () => {
+    let navigate = useNavigate()
+    const[listeProduit, setListeProduit] = useState([])
+    const [produitEnCours, setProduitEnCours] = useState({ nom: '', description: '', prix: '', nombre: '' });
+
+
+    useEffect(async () => {
+      try {
+        const res = await getData("/medicaments");
+        setListeProduit(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données", error);
+      }
+    }, []);
+
+
+    const onChangeProduit = (e) => {
+      setProduitEnCours({
+        ...produitEnCours,
+        [e.target.name]: e.target.value
+      });
+    };
+
+
+    const ajouterOuMettreAJourProduit = () => {
+      if (produitEnCours.id) {
+        // Mise à jour du produit existant dans listeProduit
+        setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? produitEnCours : prod));
+      } else {
+        // Ajout d'un nouveau produit
+        setListeProduit([...listeProduit, { ...produitEnCours, id: Date.now() }]); // Assurez-vous que 'id' est unique
+      }
+      setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' }); // Réinitialiser le formulaire
+    };
+
+
+
+
+    /*const onNomChange = (e) => {
+      setListeProduit({
+        ...listeProduit,
+        nom: e.target.value
+      });
+    };
+
+    const onDescriptionChange = (e) => {
+      setListeProduit({
+        ...listeProduit,
+        description: e.target.value
+      });
+    };
+
+
+    const onPrixChange = (e) => {
+      setListeProduit({
+        ...listeProduit,
+        prix: e.target.value
+      });
+    };
+
+    const onQuantiteChange = (e) => {
+      setListeProduit({
+        ...listeProduit,
+        nombre: e.target.value
+      });
+    };
+
+// ... Autres fonctions onChange similaires
+*/
+
+
+
+
+
+
+    /*useEffect(() => {
+      getData("/medicaments/1")
+          .then((res) => {
+            if (Array.isArray(res.data)) {
+              setListeProduit(res.data);
+            } else {
+              // Gérer les cas où les données ne sont pas un tableau
+              console.error("La réponse de l'API n'est pas un tableau");
+            }
+          })
+          .catch((error) => {
+            // Gérer les erreurs ici
+            console.error("Erreur lors de la récupération des données", error);
+          });
+    }, []);
+*/
+
+
+    /*const onSubmitInfos = async () => {
+      try {
+        console.log("Données à envoyer :", listeProduit);
+        await saveData('/medicaments/', listeProduit);
+        alert("Bien enregistré");
+      } catch (e) {
+        alert("Erreur");
+        console.error(e);
+      }
+    };*/
+
+
+    const onSubmitInfos = async () => {
+      try {
+        const method = produitEnCours.id ? 'put' : 'post';
+        const url = produitEnCours.id ? `/medicaments/${produitEnCours.id}` : '/medicaments/';
+
+        // Envoi des données du produit en cours
+        const response = await saveData(url, produitEnCours);
+
+        // Mise à jour de la liste des produits ou traitement de la réponse
+        if (method === 'post') {
+          // Ajouter le nouveau produit à la liste
+          setListeProduit([...listeProduit, { ...produitEnCours, id: response.data.id }]);
+        } else {
+          // Mettre à jour le produit existant dans la liste
+          setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? { ...produitEnCours } : prod));
+        }
+
+        // Réinitialiser uniquement le formulaire (produitEnCours), pas la liste des produits
+        setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' });
+
+        alert("Produit enregistré avec succès!");
+
+      } catch (error) {
+        console.error("Erreur lors de l'envoi des données:", error);
+        alert("Erreur lors de l'enregistrement du produit.");
+      }
+    };
+
+
+
+
+
+    const supprimerProduit = async (id) => {
+      try {
+        // Envoi d'une requête DELETE à votre API en utilisant deleteData
+        await deleteData(`/medicaments/${id}`);
+
+        // Filtrer le produit supprimé de la liste des produits
+        const produitsMisAJour = listeProduit.filter(produit => produit.id !== id);
+        setListeProduit(produitsMisAJour);
+
+        alert("Produit supprimé avec succès !");
+      } catch (error) {
+        console.error("Erreur lors de la suppression du produit:", error);
+        alert("Erreur lors de la suppression du produit.");
+      }
+    };
+
+
+
+
+
+
+
+
+
+    /*useEffect(() => {
+      axios.get('http://localhost:8000/api/medicaments/2').then(response => {
+        console.log(response.data.headers);
+      });
+    }, []);*/
+
     return (
+
       <>
         <UserHeader />
         {/* Page content */}
@@ -160,7 +312,7 @@ import {
                     <div className="pl-lg-4">
                       <Row>
                         <Col lg="6">
-                          <FormGroup>
+                          <FormGroup >
                             <label
                               className="form-control-label"
                               htmlFor="input-username"
@@ -212,7 +364,7 @@ import {
                           </FormGroup>
                         </Col>
                         <Col lg="6">
-                          <FormGroup>
+                          <FormGroup >
                             <label
                               className="form-control-label"
                               htmlFor="input-last-name"
@@ -238,85 +390,15 @@ import {
                     <div className="pl-lg-4">
                       <Row>
                         <Col md="12">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-address"
-                            >
-                              Nom du produit
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Paracetamol"
-                              id="input-address"
-                              placeholder="Home Address"
-                              type="text"
-                            />
-                          </FormGroup>
+                          <Input name="nom" value={produitEnCours.nom} onChange={onChangeProduit} type="text" />
+                          <Input name="description" value={produitEnCours.description} onChange={onChangeProduit} type="text" />
+                          <Input name="prix" value={produitEnCours.prix} onChange={onChangeProduit} type="number" />
+                          <Input name="nombre" value={produitEnCours.nombre} onChange={onChangeProduit} type="number" />
+                          <Button onClick={onSubmitInfos}>Enregistrer le produit</Button>
 
-                          <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                            >
-                              description
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                defaultValue="description"
-                                id="input-city"
-                                placeholder="description du produit"
-                                type="text"
-                            />
-                          </FormGroup>
-
-                          <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                            >
-                              Prix
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                defaultValue="prix du produit"
-                                id="input-city"
-                                placeholder="prix du produit"
-                                type="number"
-                            />
-                          </FormGroup>
-
-                          <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                            >
-                              Quantité
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                defaultValue="New York"
-                                id="input-city"
-                                placeholder="quantité"
-                                type="number"
-                            />
-                          </FormGroup>
                         </Col>
                       </Row>
-                      <Row>
-                        <Col lg="4">
-                        <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Ajouter
-                      </Button>
-                        </Col>
-                        
-                        
-                      </Row>
+
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
@@ -334,107 +416,45 @@ import {
               <CardHeader className="border-0">
                 <h3 className="mb-0">Listes des produits disponible dans la pharmacie</h3>
               </CardHeader>
+              {/* ...autres parties de votre composant... */}
+
+              {/* Tableau des produits */}
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prenom</th>
-                    <th scope="col">Telephone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Action</th>
-                    <th scope="col" />
-                  </tr>
+                <tr>
+                  <th scope="col">Numero</th>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Prix</th>
+                  <th scope="col">Quantité</th>
+                  <th scope="col">Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("../../assets/img/theme/bootstrap.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                          SAWADOGO
-                          </span>
-                        </Media>
-                      </Media>
-                    </th>
-                    <td>Emmanuel</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        275353435
-                      </Badge>
-                    </td>
-
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        emmanuel@gmail.com
-                      </Badge>
-                    </td>
-                    
-                    
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="btn-icon-only text-light"
-                          href="#pablo"
-                          role="button"
-                          size="sm"
-                          color=""
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Editer
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Supprimer
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Something else here
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-
-
-
-
-                  </tbody>
+                {Array.isArray(listeProduit) && listeProduit.map((item, index) => (
+                    <tr key={item.id || index}>
+                      <td>{index + 1}</td>
+                      <td>{item.nom}</td>
+                      <td>{item.description}</td>
+                      <td>{item.prix}</td>
+                      <td>{item.nombre}</td>
+                      <td>
+                        {/* Bouton pour modifier le produit */}
+                        <Button color="primary" size="sm" onClick={() => setProduitEnCours(item)}>
+                          Modifier
+                        </Button>
+                        {/* Bouton pour supprimer le produit */}
+                        <Button color="danger" size="sm" onClick={() => supprimerProduit(item.id)}>
+                          Supprimer
+                        </Button>
+                      </td>
+                    </tr>
+                ))}
+                </tbody>
               </Table>
+
+              {/* ...autres parties de votre composant... */}
+
             </Card>
           </div>
         </Row>

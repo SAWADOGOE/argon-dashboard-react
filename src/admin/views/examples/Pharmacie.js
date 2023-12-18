@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// reactstrap components
 import {
     Badge,
     Card,
@@ -90,15 +73,15 @@ import {
                           275353435
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           contact@pharmaciedusoleil.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -146,11 +129,11 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
-  
+
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -178,15 +161,15 @@ import {
                           987654321
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
-                          lune@pharma.com	
+                          lune@pharma.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -234,10 +217,10 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -265,15 +248,15 @@ import {
                           65353435
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           etoiles@pharma.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -321,12 +304,12 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -354,15 +337,15 @@ import {
                           789012345
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           lac@pharma.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -410,10 +393,10 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -441,15 +424,15 @@ import {
                           456789012
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           abdoulaye@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -497,11 +480,11 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
-  
+
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -529,15 +512,15 @@ import {
                           123456789
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           fanta@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -585,12 +568,12 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -618,15 +601,15 @@ import {
                           275353435
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           mariam@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -674,10 +657,10 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -705,15 +688,15 @@ import {
                           876543210
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           jean@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -761,10 +744,10 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
-  
+
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -792,15 +775,15 @@ import {
                           275353435
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           awa@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -848,9 +831,9 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -878,15 +861,15 @@ import {
                           234567890
                         </Badge>
                       </td>
-  
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           paul@gmail.com
                         </Badge>
                       </td>
-                      
-                      
+
+
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
@@ -934,9 +917,9 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-  
-  
-  
+
+
+
                     <tr>
                       <th scope="row">
                         <Media className="align-items-center">

@@ -1,6 +1,4 @@
 
-
-// reactstrap components
 import {
   Button,
   Card,

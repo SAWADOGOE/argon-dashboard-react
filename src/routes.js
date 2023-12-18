@@ -30,6 +30,7 @@ import PatientProfil from "admin/views/examples/PatientProfil";
 import HopitalProfile from "./admin/views/examples/HopitalProfile";
 import ProfileMedecin from "./admin/views/examples/ProfileMedecin";
 import Exo from "./admin/views/examples/Exo";
+import Reclamation from "./admin/views/examples/Reclamation";
 
 var routes = [
   {
@@ -70,6 +71,14 @@ var routes = [
     layout: "/admin",
   },
 
+  {
+    path: "/reclamation",
+    name: "Reclamation",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Reclamation/>,
+    layout: "/admin",
+  },
+
 
   {
     path: "/hopital-profile",
@@ -89,7 +98,7 @@ var routes = [
 
   {
     path: "/tables",
-    name: "Tables",
+    name: "Operations",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
