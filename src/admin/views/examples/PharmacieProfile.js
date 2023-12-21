@@ -1,201 +1,112 @@
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col,
-    Table,
-    Media,
-    Badge,
-    Progress,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownItem,
-    DropdownMenu
-  } from "reactstrap";
-  import UserHeader from "admin/components/Headers/UserHeader.js";
-import {useEffect, useState} from "react";
-import {deleteData, getData, saveData} from "../../../services";
-import axios, {put} from "axios";
-import {useNavigate} from "react-router-dom";
-  
-  const PharmacieProfile = () => {
-    let navigate = useNavigate()
-    const[listeProduit, setListeProduit] = useState([])
-    const [produitEnCours, setProduitEnCours] = useState({ nom: '', description: '', prix: '', nombre: '' });
+// PharmacieProfile.js
 
+// ... (importations et autres parties du code)
 
-    useEffect(async () => {
-      try {
-        const res = await getData("/medicaments");
-        setListeProduit(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données", error);
-      }
-    }, []);
+import { getById, getData, saveData, deleteData, updateData } from "../../../services";
+import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, Container, Row, Col, Table } from "reactstrap";
+import UserHeader from "admin/components/Headers/UserHeader.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
+const PharmacieProfile = () => {
+  let navigate = useNavigate();
+  const [listeProduit, setListeProduit] = useState([]);
+  const [produitEnCours, setProduitEnCours] = useState({ nom: '', description: '', prix: '', nombre: '' });
 
-    const onChangeProduit = (e) => {
+  useEffect(async () => {
+    try {
+      const res = await getData("/medicaments");
+      setListeProduit(res.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données", error);
+    }
+  }, []);
+
+  const onChangeProduit = (e) => {
+    setProduitEnCours({
+      ...produitEnCours,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const getByIdAndSetProduitEnCours = async (id) => {
+    try {
+      const res = await getById("/medicaments", id);
       setProduitEnCours({
         ...produitEnCours,
-        [e.target.name]: e.target.value
+        nom: res?.data?.nom,
+        description: res?.data?.description,
+        prix: res?.data?.prix,
+        nombre: res?.data?.nombre,
+        id: res?.data?.id
       });
-    };
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données par ID", error);
+    }
+  };
 
+  const ajouterOuMettreAJourProduit = () => {
+    if (produitEnCours.id) {
+      // Mise à jour du produit existant dans listeProduit
+      setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? produitEnCours : prod));
+    } else {
+      // Ajout d'un nouveau produit
+      setListeProduit([...listeProduit, { ...produitEnCours, id: Date.now() }]); // Assurez-vous que 'id' est unique
+    }
+    setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' }); // Réinitialiser le formulaire
+  };
 
-    const ajouterOuMettreAJourProduit = () => {
-      if (produitEnCours.id) {
-        // Mise à jour du produit existant dans listeProduit
-        setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? produitEnCours : prod));
+  const onSubmitInfos = async () => {
+    try {
+      const method = produitEnCours.id ? 'put' : 'post';
+      const url = produitEnCours.id ? `/medicaments/${produitEnCours.id}/` : '/medicaments/';
+
+      // Envoi des données du produit en cours
+      const response = await (method === 'put' ? updateData : saveData)(url, produitEnCours);
+
+      // Mise à jour de la liste des produits ou traitement de la réponse
+      if (method === 'post') {
+        // Ajouter le nouveau produit à la liste
+        setListeProduit([...listeProduit, { ...produitEnCours, id: response.data.id }]);
       } else {
-        // Ajout d'un nouveau produit
-        setListeProduit([...listeProduit, { ...produitEnCours, id: Date.now() }]); // Assurez-vous que 'id' est unique
+        // Mettre à jour le produit existant dans la liste
+        setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? { ...produitEnCours } : prod));
       }
-      setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' }); // Réinitialiser le formulaire
-    };
 
+      // Réinitialiser uniquement le formulaire (produitEnCours), pas la liste des produits
+      setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' });
 
+      alert("Produit enregistré avec succès!");
 
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données:", error);
 
-    /*const onNomChange = (e) => {
-      setListeProduit({
-        ...listeProduit,
-        nom: e.target.value
-      });
-    };
+      alert("Erreur lors de l'enregistrement du produit.");
+    }
+  };
 
-    const onDescriptionChange = (e) => {
-      setListeProduit({
-        ...listeProduit,
-        description: e.target.value
-      });
-    };
+  const supprimerProduit = async (id) => {
+    try {
+      // Envoi d'une requête DELETE à votre API en utilisant deleteData
+      await deleteData(`/medicaments/${id}`);
 
+      // Filtrer le produit supprimé de la liste des produits
+      const produitsMisAJour = listeProduit.filter(produit => produit.id !== id);
+      setListeProduit(produitsMisAJour);
 
-    const onPrixChange = (e) => {
-      setListeProduit({
-        ...listeProduit,
-        prix: e.target.value
-      });
-    };
+      alert("Produit supprimé avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la suppression du produit:", error);
+      alert("Erreur lors de la suppression du produit.");
+    }
+  };
 
-    const onQuantiteChange = (e) => {
-      setListeProduit({
-        ...listeProduit,
-        nombre: e.target.value
-      });
-    };
-
-// ... Autres fonctions onChange similaires
-*/
-
-
-
-
-
-
-    /*useEffect(() => {
-      getData("/medicaments/1")
-          .then((res) => {
-            if (Array.isArray(res.data)) {
-              setListeProduit(res.data);
-            } else {
-              // Gérer les cas où les données ne sont pas un tableau
-              console.error("La réponse de l'API n'est pas un tableau");
-            }
-          })
-          .catch((error) => {
-            // Gérer les erreurs ici
-            console.error("Erreur lors de la récupération des données", error);
-          });
-    }, []);
-*/
-
-
-    /*const onSubmitInfos = async () => {
-      try {
-        console.log("Données à envoyer :", listeProduit);
-        await saveData('/medicaments/', listeProduit);
-        alert("Bien enregistré");
-      } catch (e) {
-        alert("Erreur");
-        console.error(e);
-      }
-    };*/
-
-
-    const onSubmitInfos = async () => {
-      try {
-        const method = produitEnCours.id ? 'put' : 'post';
-        const url = produitEnCours.id ? `/medicaments/${produitEnCours.id}` : '/medicaments/';
-
-        // Envoi des données du produit en cours
-        const response = await saveData(url, produitEnCours);
-
-        // Mise à jour de la liste des produits ou traitement de la réponse
-        if (method === 'post') {
-          // Ajouter le nouveau produit à la liste
-          setListeProduit([...listeProduit, { ...produitEnCours, id: response.data.id }]);
-        } else {
-          // Mettre à jour le produit existant dans la liste
-          setListeProduit(listeProduit.map(prod => prod.id === produitEnCours.id ? { ...produitEnCours } : prod));
-        }
-
-        // Réinitialiser uniquement le formulaire (produitEnCours), pas la liste des produits
-        setProduitEnCours({ nom: '', description: '', prix: '', nombre: '' });
-
-        alert("Produit enregistré avec succès!");
-
-      } catch (error) {
-        console.error("Erreur lors de l'envoi des données:", error);
-        alert("Erreur lors de l'enregistrement du produit.");
-      }
-    };
-
-
-
-
-
-    const supprimerProduit = async (id) => {
-      try {
-        // Envoi d'une requête DELETE à votre API en utilisant deleteData
-        await deleteData(`/medicaments/${id}`);
-
-        // Filtrer le produit supprimé de la liste des produits
-        const produitsMisAJour = listeProduit.filter(produit => produit.id !== id);
-        setListeProduit(produitsMisAJour);
-
-        alert("Produit supprimé avec succès !");
-      } catch (error) {
-        console.error("Erreur lors de la suppression du produit:", error);
-        alert("Erreur lors de la suppression du produit.");
-      }
-    };
-
-
-
-
-
-
-
-
-
-    /*useEffect(() => {
-      axios.get('http://localhost:8000/api/medicaments/2').then(response => {
-        console.log(response.data.headers);
-      });
-    }, []);*/
-
-    return (
-
+  return (
       <>
         <UserHeader />
+        {/* Reste du code... */}
+
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -206,9 +117,9 @@ import {useNavigate} from "react-router-dom";
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={(e) => e.preventDefault()}>
                         <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                            alt="..."
+                            className="rounded-circle"
+                            src={require("../../assets/img/theme/team-4-800x800.jpg")}
                         />
                       </a>
                     </div>
@@ -217,20 +128,20 @@ import {useNavigate} from "react-router-dom";
                 <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                   <div className="d-flex justify-content-between">
                     <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
+                        className="mr-4"
+                        color="info"
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                        size="sm"
                     >
                       Connect
                     </Button>
                     <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
+                        className="float-right"
+                        color="default"
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                        size="sm"
                     >
                       Message
                     </Button>
@@ -294,10 +205,10 @@ import {useNavigate} from "react-router-dom";
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
+                          color="primary"
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                          size="sm"
                       >
                         Settings
                       </Button>
@@ -314,33 +225,33 @@ import {useNavigate} from "react-router-dom";
                         <Col lg="6">
                           <FormGroup >
                             <label
-                              className="form-control-label"
-                              htmlFor="input-username"
+                                className="form-control-label"
+                                htmlFor="input-username"
                             >
                               Nom de la pharmacie
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              defaultValue="pharmacie du coeur"
-                              id="input-username"
-                              placeholder="pharmacie du coeur"
-                              type="text"
+                                className="form-control-alternative"
+                                defaultValue="pharmacie du coeur"
+                                id="input-username"
+                                placeholder="pharmacie du coeur"
+                                type="text"
                             />
                           </FormGroup>
                         </Col>
                         <Col lg="6">
                           <FormGroup>
                             <label
-                              className="form-control-label"
-                              htmlFor="input-email"
+                                className="form-control-label"
+                                htmlFor="input-email"
                             >
                               Email de la pharmacie
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              id="input-email"
-                              placeholder="coeur@example.com"
-                              type="email"
+                                className="form-control-alternative"
+                                id="input-email"
+                                placeholder="coeur@example.com"
+                                type="email"
                             />
                           </FormGroup>
                         </Col>
@@ -349,34 +260,34 @@ import {useNavigate} from "react-router-dom";
                         <Col lg="6">
                           <FormGroup>
                             <label
-                              className="form-control-label"
-                              htmlFor="input-first-name"
+                                className="form-control-label"
+                                htmlFor="input-first-name"
                             >
                               Adresse de la pharmacie
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              defaultValue="10 metres de la banque BCB"
-                              id="input-first-name"
-                              placeholder="10 metres de la banque BCB"
-                              type="text"
+                                className="form-control-alternative"
+                                defaultValue="10 metres de la banque BCB"
+                                id="input-first-name"
+                                placeholder="10 metres de la banque BCB"
+                                type="text"
                             />
                           </FormGroup>
                         </Col>
                         <Col lg="6">
                           <FormGroup >
                             <label
-                              className="form-control-label"
-                              htmlFor="input-last-name"
+                                className="form-control-label"
+                                htmlFor="input-last-name"
                             >
                               Numero de la pharmacie
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              defaultValue="67542317"
-                              id="input-last-name"
-                              placeholder="67542317"
-                              type="text"
+                                className="form-control-alternative"
+                                defaultValue="67542317"
+                                id="input-last-name"
+                                placeholder="67542317"
+                                type="text"
                             />
                           </FormGroup>
                         </Col>
@@ -385,7 +296,7 @@ import {useNavigate} from "react-router-dom";
                     <hr className="my-4" />
                     {/* Address */}
                     <h6 className="heading-small text-muted mb-4">
-                     Ajouter un produit
+                      Ajouter un produit
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -402,7 +313,7 @@ import {useNavigate} from "react-router-dom";
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    
+
                   </Form>
                 </CardBody>
               </Card>
@@ -419,51 +330,43 @@ import {useNavigate} from "react-router-dom";
               {/* ...autres parties de votre composant... */}
 
               {/* Tableau des produits */}
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                <tr>
-                  <th scope="col">Numero</th>
-                  <th scope="col">Nom</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Prix</th>
-                  <th scope="col">Quantité</th>
-                  <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {Array.isArray(listeProduit) && listeProduit.map((item, index) => (
-                    <tr key={item.id || index}>
-                      <td>{index + 1}</td>
-                      <td>{item.nom}</td>
-                      <td>{item.description}</td>
-                      <td>{item.prix}</td>
-                      <td>{item.nombre}</td>
-                      <td>
-                        {/* Bouton pour modifier le produit */}
-                        <Button color="primary" size="sm" onClick={() => setProduitEnCours(item)}>
-                          Modifier
-                        </Button>
-                        {/* Bouton pour supprimer le produit */}
-                        <Button color="danger" size="sm" onClick={() => supprimerProduit(item.id)}>
-                          Supprimer
-                        </Button>
-                      </td>
-                    </tr>
-                ))}
-                </tbody>
-              </Table>
-
+        <Table className="align-items-center table-flush" responsive>
+          <thead className="thead-light">
+          <tr>
+            <th scope="col">Numero</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          {Array.isArray(listeProduit) && listeProduit.map((item, index) => (
+              <tr key={item.id || index}>
+                <td>{index + 1}</td>
+                <td>{item.nom}</td>
+                <td>{item.description}</td>
+                <td>{item.prix}</td>
+                <td>{item.nombre}</td>
+                <td>
+                  {/* Bouton pour modifier le produit */}
+                  <Button color="primary" size="sm" onClick={() => getByIdAndSetProduitEnCours(item.id)}>
+                    Modifier
+                  </Button>
+                  <Button color="danger" size="sm" onClick={() => supprimerProduit(item.id)}>
+                    Supprimer
+                  </Button>                </td>
+              </tr>
+          ))}
+          </tbody>
+        </Table>
               {/* ...autres parties de votre composant... */}
 
             </Card>
           </div>
-        </Row>
+        </Row>      </>
+  );
+};
 
-
-
-      </>
-    );
-  };
-  
-  export default PharmacieProfile;
-  
+export default PharmacieProfile;
