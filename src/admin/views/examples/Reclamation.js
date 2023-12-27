@@ -1,55 +1,52 @@
+// PharmacieProfile.js
 
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col,
-    Table,
-    Media,
-    Badge,
-    Progress,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownItem,
-    DropdownMenu
-} from "reactstrap";
-// core components
+// ... (importations et autres parties du code)
+
+import { getById, getData, saveData, deleteData, updateData } from "../../../services";
+import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, Container, Row, Col, Table } from "reactstrap";
 import UserHeader from "admin/components/Headers/UserHeader.js";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {getById, saveData, updateData} from "../../../services";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Reclamation = () => {
-
-    let navigate = useNavigate()
-
+    let navigate = useNavigate();
     const [listeReclamation, setListeReclamation] = useState([]);
-    const [reclamationEnCours, setreclamationEnCours] = useState({ date: '', montant: '', status: '', description: '', patient: '' });
+    const [reclamationEnCours, setReclamationEnCours] = useState({ date: '', montant: '', status: '', description: '', patient:'' });
 
-    const onChangeReclamation = (e) => {
-        setreclamationEnCours({
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await getData("/reclamations/");
+                setListeReclamation(res.data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des données", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
+    const onChangeProduit = (e) => {
+        setReclamationEnCours({
             ...reclamationEnCours,
             [e.target.name]: e.target.value
         });
     };
 
 
-    const getByIdAndSetReclamationEnCours = async (id) => {
+    const getByIdAndSetProduitEnCours = async (id) => {
         try {
             const res = await getById("/reclamations", id);
-            setreclamationEnCours({
+            setReclamationEnCours({
                 ...reclamationEnCours,
-                date: res?.data?.date,
-                montant: res?.data?.montant,
-                status: res?.data?.status,
-                description: res?.data?.description,
-                patient: res?.data?.patient,
+                date: res?.data.date,
+                montant: res?.data.montant,
+                statut: res?.data.statut,
+                description: res?.data.description,
+                patient:res?.data.patient,
                 id: res?.data?.id
             });
         } catch (error) {
@@ -57,12 +54,21 @@ const Reclamation = () => {
         }
     };
 
-
+    const ajouterOuMettreAJourProduit = () => {
+        if (reclamationEnCours.id) {
+            // Mise à jour du produit existant dans listeReclamation
+            setListeReclamation(listeReclamation.map(prod => prod.id === reclamationEnCours.id ? reclamationEnCours : prod));
+        } else {
+            // Ajout d'un nouveau produit
+            setListeReclamation([...listeReclamation, { ...reclamationEnCours, id: Date.now() }]); // Assurez-vous que 'id' est unique
+        }
+        setReclamationEnCours({ date: '', montant: '', status: '', description: '', patient:'' }); // Réinitialiser le formulaire
+    };
 
     const onSubmitInfos = async () => {
         try {
             const method = reclamationEnCours.id ? 'put' : 'post';
-            const url = reclamationEnCours.id ? `/medicaments/${reclamationEnCours.id}/` : '/medicaments/';
+            const url = reclamationEnCours.id ? `/reclamations/${reclamationEnCours.id}/` : '/reclamations/';
 
             // Envoi des données du produit en cours
             const response = await (method === 'put' ? updateData : saveData)(url, reclamationEnCours);
@@ -70,16 +76,16 @@ const Reclamation = () => {
             // Mise à jour de la liste des produits ou traitement de la réponse
             if (method === 'post') {
                 // Ajouter le nouveau produit à la liste
-                setreclamationEnCours([...listeReclamation, { ...reclamationEnCours, id: response.data.id }]);
+                setListeReclamation([...listeReclamation, { ...reclamationEnCours, id: response.data.id }]);
             } else {
                 // Mettre à jour le produit existant dans la liste
-                setreclamationEnCours(listeReclamation.map(prod => prod.id === reclamationEnCours.id ? { ...reclamationEnCours } : prod));
+                setListeReclamation(listeReclamation.map(prod => prod.id === reclamationEnCours.id ? { ...reclamationEnCours } : prod));
             }
 
-            // Réinitialiser uniquement le formulaire (produitEnCours), pas la liste des produits
-            setreclamationEnCours({ date: '', montant: '', status: '', description: '', patient: '' });
+            // Réinitialiser uniquement le formulaire (reclamationEnCours), pas la liste des produits
+            setReclamationEnCours({ date: '', montant: '', status: '', description: '', patient:''});
 
-            alert("Produit enregistré avec succès!");
+            alert("Reclamation enregistré avec succès!");
 
         } catch (error) {
             console.error("Erreur lors de l'envoi des données:", error);
@@ -88,10 +94,27 @@ const Reclamation = () => {
         }
     };
 
+    const supprimerProduit = async (id) => {
+        try {
+            // Envoi d'une requête DELETE à votre API en utilisant deleteData
+            await deleteData(`/reclamations/${id}`);
+
+            // Filtrer le produit supprimé de la liste des produits
+            const produitsMisAJour = listeReclamation.filter(produit => produit.id !== id);
+            setListeReclamation(produitsMisAJour);
+
+            //alert("Produit supprimé avec succès !");
+        } catch (error) {
+            console.error("Erreur lors de la suppression du produit:", error);
+            alert("Erreur lors de la suppression du produit.");
+        }
+    };
 
     return (
         <>
             <UserHeader />
+            {/* Reste du code... */}
+
             {/* Page content */}
             <Container className="mt--7" fluid>
                 <Row>
@@ -186,9 +209,18 @@ const Reclamation = () => {
                             <CardHeader className="bg-white border-0">
                                 <Row className="align-items-center">
                                     <Col xs="8">
-                                        <h3 className="mb-0">Formulaire de remboursement</h3>
+                                        <h3 className="mb-0">Compte pharmacie</h3>
                                     </Col>
-
+                                    <Col className="text-right" xs="4">
+                                        <Button
+                                            color="primary"
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                            size="sm"
+                                        >
+                                            Settings
+                                        </Button>
+                                    </Col>
                                 </Row>
                             </CardHeader>
                             <CardBody>
@@ -199,44 +231,36 @@ const Reclamation = () => {
                                     <div className="pl-lg-4">
                                         <Row>
                                             <Col lg="6">
-                                                <FormGroup>
+                                                <FormGroup >
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-username"
                                                     >
-                                                        Nom du patient
+                                                        Numero d'assurance du patient
                                                     </label>
-
                                                     <Input
-                                                        name="nom"
-                                                        value={reclamationEnCours}
-                                                        onChange={onChangeReclamation}
-                                                        type="select"
-                                                    >
-                                                        {/* Assurez-vous d'inclure les options ici */}
-                                                    </Input>
+                                                        className="form-control-alternative"
+                                                        defaultValue="pharmacie du coeur"
+                                                        id="input-username"
+                                                        placeholder="pharmacie du coeur"
+                                                        type="text"
+                                                    />
                                                 </FormGroup>
-
                                             </Col>
                                             <Col lg="6">
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-username"
+                                                        htmlFor="input-email"
                                                     >
-                                                        date
+                                                        Date de naissance
                                                     </label>
-
                                                     <Input
-                                                        name="date"
-                                                        value={reclamationEnCours}
-                                                        onChange={onChangeReclamation}
+                                                        className="form-control-alternative"
+                                                        id="input-date"
                                                         type="date"
-                                                    >
-                                                        {/* Assurez-vous d'inclure les options ici */}
-                                                    </Input>
+                                                    />
                                                 </FormGroup>
-
                                             </Col>
                                         </Row>
                                         <Row>
@@ -244,163 +268,154 @@ const Reclamation = () => {
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-username"
+                                                        htmlFor="input-first-name"
                                                     >
-                                                        Montant total
+                                                        Sexe
                                                     </label>
-
                                                     <Input
-                                                        name="montant_total"
-                                                        value={reclamationEnCours}
-                                                        onChange={onChangeReclamation}
-                                                        type="number"
-                                                    >
-                                                        {/* Assurez-vous d'inclure les options ici */}
-                                                    </Input>
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-username"
-                                                    >
-                                                        description
-                                                    </label>
-
-                                                    <Input
-                                                        name="description"
-                                                        value={reclamationEnCours}
-                                                        onChange={onChangeReclamation}
+                                                        className="form-control-alternative"
+                                                        defaultValue="10 metres de la banque BCB"
+                                                        id="input-first-name"
+                                                        placeholder="10 metres de la banque BCB"
                                                         type="text"
-                                                    >
-                                                        {/* Assurez-vous d'inclure les options ici */}
-                                                    </Input>
+                                                    />
                                                 </FormGroup>
-
-                                                {/*<FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-last-name"
-                                                    >
-                                                        ordonnance 1
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        id="input-last-name"
-                                                        placeholder="Last name"
-                                                        type="file"
-                                                    />
-                                                </FormGroup>*/}
-
-
-
-
-                                                {/*<FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-last-name"
-                                                    >
-                                                        ordonnance 2
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        id="input-last-name"
-                                                        placeholder="Last name"
-                                                        type="file"
-                                                    />
-                                                </FormGroup>*/}
-
-
-                                                <Button
-                                                    color="primary"
-                                                    href="#pablo"
-                                                    onClick={(e) => e.preventDefault()}
-                                                    size="sm"
-                                                >
-                                                    Envoyer
-                                                </Button>
-
                                             </Col>
                                             <Col lg="6">
-                                                {/*<FormGroup>
+                                                <FormGroup >
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
                                                     >
-                                                        Telephone du patient
+                                                        Adresse du patient
                                                     </label>
                                                     <Input
                                                         className="form-control-alternative"
-                                                        defaultValue="Telephone"
+                                                        defaultValue="67542317"
                                                         id="input-last-name"
-                                                        placeholder="Last name"
-                                                        type="number"
+                                                        placeholder="67542317"
+                                                        type="text"
                                                     />
                                                 </FormGroup>
-*/}
-
-
-                                                <FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-username"
-                                                    >
-                                                        status
-                                                    </label>
-
-                                                    <Input
-                                                        name="status"
-                                                        value={reclamationEnCours}
-                                                        onChange={onChangeReclamation}
-                                                        type="select"
-                                                    >
-                                                        {/* Assurez-vous d'inclure les options ici */}
-                                                    </Input>
-                                                </FormGroup>
-
-
-
-
-                                                {/*<FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-last-name"
-                                                    >
-                                                        Ordonnace 2
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        id="input-last-name"
-                                                        placeholder="Last name"
-                                                        type="file"
-                                                    />
-                                                </FormGroup>*/}
-
-
-
-
-
-
-                                                {/*<FormGroup>
-                                                    <label
-                                                        className="form-control-label"
-                                                        htmlFor="input-last-name"
-                                                    >
-                                                        ordonnance 2
-                                                    </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        id="input-last-name"
-                                                        placeholder="Last name"
-                                                        type="file"
-                                                    />
-                                                </FormGroup>*/}
-
-
 
                                             </Col>
                                         </Row>
+
                                     </div>
+                                    <hr className="my-4" />
+                                    {/* Address */}
+                                    <h6 className="heading-small text-muted mb-4">
+                                        Ajouter une reclamation
+                                    </h6>
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col md="12">
+                                                {/*
+                          <Input name="nom" value={reclamationEnCours.nom} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="description" value={reclamationEnCours.description} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="prix" value={reclamationEnCours.prix} onChange={onChangeProduit} type="number" />
+*/}
+
+
+
+
+
+
+
+
+
+                                            </Col>
+
+
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-username"
+                                                    >
+                                                        Date de reclamation
+                                                    </label>
+                                                    <Input
+                                                        name="date"
+                                                        value={reclamationEnCours.date}
+                                                        onChange={onChangeProduit}
+                                                        type="date"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-date"
+                                                    >
+                                                        Montant
+                                                    </label>
+                                                    <Input name="montant" value={reclamationEnCours.montant} onChange={onChangeProduit} type="number"/>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        Status
+                                                    </label>
+                                                    <Input name="statut" value={reclamationEnCours.statut} onChange={onChangeProduit} type="text"/>
+                                                </FormGroup>
+
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-numero"
+                                                    >
+                                                        description                                                    </label>
+                                                    <Input name="description" value={reclamationEnCours.description} onChange={onChangeProduit} type="text
+                                                    " />
+                                                </FormGroup>
+
+
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-adresse"
+                                                    >
+                                                        patient
+                                                    </label>
+                                                    <Input name="patient" value={reclamationEnCours.patient} onChange={onChangeProduit} type="number" />
+                                                </FormGroup>
+
+
+                                                {/*<div className="form-group">
+                                                    <label htmlFor="carrosserieId"><strong>Carrosserie</strong>:</label>
+                                                    <select className="form-control" id="carrosserieId" value={formData?.carrosserieId} name={'carrosserieId'} onChange={onChange}>
+                                                        <option value="">Sélectionner une carrosserie</option>
+                                                        {listCarrosserie.map((carrosserie) => (
+                                                            <option key={carrosserie.id} value={carrosserie.id}>
+                                                                {carrosserie.nom}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>*/}
+
+
+
+                                                <Button className = 'btn-success' onClick={onSubmitInfos} >Enregistrer la reclamation</Button>
+                                            </Col>
+                                        </Row>
+
+                                    </div>
+                                    <hr className="my-4" />
+                                    {/* Description */}
 
                                 </Form>
                             </CardBody>
@@ -409,9 +424,56 @@ const Reclamation = () => {
 
                 </Row>
             </Container>
+            <Row>
+                <div className="col">
+                    <Card className="shadow">
+                        <CardHeader className="border-0">
+                            <h3 className="mb-0">Listes des produits disponible dans la pharmacie</h3>
+                        </CardHeader>
+                        {/* ...autres parties de votre composant... */}
 
+                        {/* Tableau des produits */}
+                        <Table className="align-items-center table-flush" responsive>
+                            <thead className="thead-light">
+                            <tr>
+                                <th scope="col">Numero</th>
+                                <th scope="col">date</th>
+                                <th scope="col">montant</th>
+                                <th scope="col">statut</th>
+                                <th scope="col">description</th>
+                                <th scope="col">patient</th>
+                                <th scope="col">Action</th>
 
-        </>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {Array.isArray(listeReclamation) && listeReclamation.map((item, index) => (
+                                <tr key={item.id || index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.date}</td>
+                                    <td>{item.montant}</td>
+                                    <td>{item.statut}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.patient}</td>
+                                    <td>{item.Action}</td>
+                                    <td>
+                                        {/* Bouton pour modifier le produit */}
+                                        <Button color="primary" size="sm" onClick={() => getByIdAndSetProduitEnCours(item.id)}>
+                                            Modifier
+                                        </Button>
+                                        <Button color="danger" size="sm" onClick={() => supprimerProduit(item.id)}>
+                                            Supprimer
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </Table>
+                        {/* ...autres parties de votre composant... */}
+
+                    </Card>
+                </div>
+            </Row>      </>
     );
 };
 

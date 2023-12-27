@@ -11,6 +11,7 @@ const getHeaders = () => ({
 export function getData(url) {
     return axios.get(`${API_URL}${url}`, { headers: getHeaders() });
 
+
 }
 
 export function getById(url, id) {

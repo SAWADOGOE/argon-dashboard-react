@@ -14,14 +14,20 @@ const PharmacieProfile = () => {
   const [listeProduit, setListeProduit] = useState([]);
   const [produitEnCours, setProduitEnCours] = useState({ nom: '', description: '', prix: '', nombre: '' });
 
-  useEffect(async () => {
-    try {
-      const res = await getData("/medicaments");
-      setListeProduit(res.data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des données", error);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getData("/medicaments/");
+        setListeProduit(res.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
+
 
   const onChangeProduit = (e) => {
     setProduitEnCours({
@@ -29,6 +35,8 @@ const PharmacieProfile = () => {
       [e.target.name]: e.target.value
     });
   };
+
+
 
   const getByIdAndSetProduitEnCours = async (id) => {
     try {
@@ -95,7 +103,7 @@ const PharmacieProfile = () => {
       const produitsMisAJour = listeProduit.filter(produit => produit.id !== id);
       setListeProduit(produitsMisAJour);
 
-      alert("Produit supprimé avec succès !");
+      //alert("Produit supprimé avec succès !");
     } catch (error) {
       console.error("Erreur lors de la suppression du produit:", error);
       alert("Erreur lors de la suppression du produit.");

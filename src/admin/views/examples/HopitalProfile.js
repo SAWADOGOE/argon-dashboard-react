@@ -319,6 +319,231 @@ const HopitalProfile = () => {
                                             </Col>
                                         </Row>
                                     </div>
+
+
+
+                                    <h6 className="heading-small text-muted mb-4">
+                                        Ajouter un patient
+                                    </h6>
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col md="12">
+                                                {/*
+                          <Input name="nom" value={produitEnCours.nom} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="description" value={produitEnCours.description} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="prix" value={produitEnCours.prix} onChange={onChangeProduit} type="number" />
+*/}
+
+
+
+
+
+
+
+
+
+                                            </Col>
+
+
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-username"
+                                                    >
+                                                        Nom du produit
+                                                    </label>
+                                                    <Input name="nom"  type="text"/>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-email"
+                                                    >
+                                                        description du produit
+                                                    </label>
+                                                    <Input name="description"  type="text"/>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+
+
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-name"
+                                                    >
+                                                        Quantié du produit
+                                                    </label>
+                                                    <Input name="nombre"  type="number" />
+                                                </FormGroup>
+
+                                                <Button className = 'btn-success'  >Enregistrer le produit</Button>
+                                            </Col>
+                                        </Row>
+
+                                    </div>
+
+
+
+
+                                    <h6 className="heading-small text-muted mb-4">
+                                        Gerer un remboursement
+                                    </h6>
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col md="12">
+                                                {/*
+                          <Input name="nom" value={produitEnCours.nom} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="description" value={produitEnCours.description} onChange={onChangeProduit} type="text" />
+*/}
+                                                {/*
+                          <Input name="prix" value={produitEnCours.prix} onChange={onChangeProduit} type="number" />
+*/}
+
+
+
+
+
+
+
+
+
+                                            </Col>
+
+
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-username"
+                                                    >
+                                                        Nom du produit
+                                                    </label>
+                                                    <Input name="nom"  type="text"/>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-email"
+                                                    >
+                                                        description du produit
+                                                    </label>
+                                                    <Input name="description"  type="text"/>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+
+
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-first-name"
+                                                    >
+                                                        prix du produit
+                                                    </label>
+                                                    <Input name="prix"  type="number"/>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="6">
+                                                <FormGroup >
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-last-name"
+                                                    >
+                                                        Quantié du produit
+                                                    </label>
+                                                    <Input name="nombre"  type="number" />
+                                                </FormGroup>
+
+                                                <Button className = 'btn-success'  >Enregistrer le produit</Button>
+                                            </Col>
+                                        </Row>
+
+                                    </div>
+
+
+
+
+
+
+
+
                                     <hr className="my-4" />
                                     {/* Description */}
                                     <h6 className="heading-small text-muted mb-4">About me</h6>
