@@ -13,8 +13,28 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "admin/components/Headers/UserHeader.js";
+import {deleteData} from "../../../services";
+import {useState} from "react";
 
 const HopitalProfile = () => {
+    const [listeHopital, setListeHopital] = useState([]);
+    const [HopitalEnCours, setHopitalEnCours] = useState({ nom: '', description: '', prix: '', nombre: '' });
+
+    const supprimerProduit = async (id) => {
+        try {
+            // Envoi d'une requête DELETE à votre API en utilisant deleteData
+            await deleteData(`/medicaments/${id}`);
+
+            // Filtrer le produit supprimé de la liste des produits
+            const produitsMisAJour = listeHopital.filter(produit => produit.id !== id);
+            setListeHopital(produitsMisAJour);
+
+            alert("Produit supprimé avec succès !");
+        } catch (error) {
+            console.error("Erreur lors de la suppression du produit:", error);
+            alert("Erreur lors de la suppression du produit.");
+        }
+    };
     return (
         <>
             <UserHeader />
@@ -215,18 +235,20 @@ const HopitalProfile = () => {
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-address"
+                                                        htmlFor="input-username"
                                                     >
-                                                        Nom
+                                                        nom
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                                                        id="input-address"
-                                                        placeholder="Home Address"
+                                                        name="nom"
+
                                                         type="text"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                             </Col>
                                         </Row>
                                         <Row>
@@ -234,35 +256,39 @@ const HopitalProfile = () => {
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-city"
+                                                        htmlFor="input-username"
                                                     >
                                                         adresse
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="New York"
-                                                        id="input-city"
-                                                        placeholder="City"
+                                                        name="date"
+
                                                         type="text"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                             </Col>
                                             <Col lg="4">
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-country"
+                                                        htmlFor="input-username"
                                                     >
-                                                        telephone
+                                                        Telephone
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="United States"
-                                                        id="input-country"
-                                                        placeholder="Country"
-                                                        type="text"
-                                                    />
+                                                        name="date"
+
+                                                        type="number"
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                                 <Button
                                                     color="primary"
                                                     href="#pablo"
@@ -276,17 +302,20 @@ const HopitalProfile = () => {
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-country"
+                                                        htmlFor="input-username"
                                                     >
-                                                        Postal code
+                                                        Postal
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        id="input-postal-code"
-                                                        placeholder="Postal code"
+                                                        name="date"
+
                                                         type="number"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                             </Col>
                                         </Row>
                                     </div>

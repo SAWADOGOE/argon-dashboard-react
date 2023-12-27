@@ -1,23 +1,23 @@
 
 import {
-    Badge,
-    Card,
-    CardHeader,
-    CardFooter,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    Media,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    Progress,
-    Table,
-    Container,
-    Row,
-    UncontrolledTooltip,
-  } from "reactstrap";
+  Badge,
+  Card,
+  CardHeader,
+  CardFooter,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Progress,
+  Table,
+  Container,
+  Row,
+  UncontrolledTooltip, Input, FormGroup,
+} from "reactstrap";
   // core components
   import Header from "admin/components/Headers/Header.js";
   
@@ -31,6 +31,23 @@ import {
           <Row>
             <div className="col">
               <Card className="shadow">
+
+                <h3 className="mb-0">Ajouter pharmacie</h3>
+                <FormGroup>
+                  <label
+                      className="form-control-label"
+                      htmlFor="input-first-name"
+                  >
+                    nom de la pharmacie
+                  </label>
+                  <Input
+                      className="form-control-alternative"
+                      defaultValue="Lucky"
+                      id="input-first-name"
+                      placeholder="First name"
+                      type="text"
+                  />
+                </FormGroup>
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Listes des pharmacie agréer</h3>
                 </CardHeader>

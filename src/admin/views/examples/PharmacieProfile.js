@@ -292,6 +292,7 @@ const PharmacieProfile = () => {
                           </FormGroup>
                         </Col>
                       </Row>
+
                     </div>
                     <hr className="my-4" />
                     {/* Address */}
@@ -301,12 +302,74 @@ const PharmacieProfile = () => {
                     <div className="pl-lg-4">
                       <Row>
                         <Col md="12">
+{/*
                           <Input name="nom" value={produitEnCours.nom} onChange={onChangeProduit} type="text" />
+*/}
+{/*
                           <Input name="description" value={produitEnCours.description} onChange={onChangeProduit} type="text" />
+*/}
+{/*
                           <Input name="prix" value={produitEnCours.prix} onChange={onChangeProduit} type="number" />
-                          <Input name="nombre" value={produitEnCours.nombre} onChange={onChangeProduit} type="number" />
-                          <Button onClick={onSubmitInfos}>Enregistrer le produit</Button>
+*/}
 
+
+
+
+
+
+
+
+
+                        </Col>
+
+
+                        <Col lg="6">
+                          <FormGroup >
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                              Nom du produit
+                            </label>
+                            <Input name="nom" value={produitEnCours.nom} onChange={onChangeProduit} type="text"/>
+                          </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-email"
+                            >
+                              description du produit
+                            </label>
+                            <Input name="description" value={produitEnCours.description} onChange={onChangeProduit} type="text"/>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-first-name"
+                            >
+                              prix du produit
+                            </label>
+                            <Input name="prix" value={produitEnCours.prix} onChange={onChangeProduit} type="number"/>
+                          </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                          <FormGroup >
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-last-name"
+                            >
+                              Quantié du produit
+                            </label>
+                            <Input name="nombre" value={produitEnCours.nombre} onChange={onChangeProduit} type="number" />
+                          </FormGroup>
+
+                          <Button className = 'btn-success' onClick={onSubmitInfos} >Enregistrer le produit</Button>
                         </Col>
                       </Row>
 
@@ -356,7 +419,8 @@ const PharmacieProfile = () => {
                   </Button>
                   <Button color="danger" size="sm" onClick={() => supprimerProduit(item.id)}>
                     Supprimer
-                  </Button>                </td>
+                  </Button>
+                </td>
               </tr>
           ))}
           </tbody>

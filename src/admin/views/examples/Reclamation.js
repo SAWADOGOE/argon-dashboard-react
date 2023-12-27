@@ -22,10 +22,73 @@ import {
 // core components
 import UserHeader from "admin/components/Headers/UserHeader.js";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import {getById, saveData, updateData} from "../../../services";
 
 const Reclamation = () => {
 
     let navigate = useNavigate()
+
+    const [listeReclamation, setListeReclamation] = useState([]);
+    const [reclamationEnCours, setreclamationEnCours] = useState({ date: '', montant: '', status: '', description: '', patient: '' });
+
+    const onChangeReclamation = (e) => {
+        setreclamationEnCours({
+            ...reclamationEnCours,
+            [e.target.name]: e.target.value
+        });
+    };
+
+
+    const getByIdAndSetReclamationEnCours = async (id) => {
+        try {
+            const res = await getById("/reclamations", id);
+            setreclamationEnCours({
+                ...reclamationEnCours,
+                date: res?.data?.date,
+                montant: res?.data?.montant,
+                status: res?.data?.status,
+                description: res?.data?.description,
+                patient: res?.data?.patient,
+                id: res?.data?.id
+            });
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données par ID", error);
+        }
+    };
+
+
+
+    const onSubmitInfos = async () => {
+        try {
+            const method = reclamationEnCours.id ? 'put' : 'post';
+            const url = reclamationEnCours.id ? `/medicaments/${reclamationEnCours.id}/` : '/medicaments/';
+
+            // Envoi des données du produit en cours
+            const response = await (method === 'put' ? updateData : saveData)(url, reclamationEnCours);
+
+            // Mise à jour de la liste des produits ou traitement de la réponse
+            if (method === 'post') {
+                // Ajouter le nouveau produit à la liste
+                setreclamationEnCours([...listeReclamation, { ...reclamationEnCours, id: response.data.id }]);
+            } else {
+                // Mettre à jour le produit existant dans la liste
+                setreclamationEnCours(listeReclamation.map(prod => prod.id === reclamationEnCours.id ? { ...reclamationEnCours } : prod));
+            }
+
+            // Réinitialiser uniquement le formulaire (produitEnCours), pas la liste des produits
+            setreclamationEnCours({ date: '', montant: '', status: '', description: '', patient: '' });
+
+            alert("Produit enregistré avec succès!");
+
+        } catch (error) {
+            console.error("Erreur lors de l'envoi des données:", error);
+
+            alert("Erreur lors de l'enregistrement du produit.");
+        }
+    };
+
+
     return (
         <>
             <UserHeader />
@@ -143,30 +206,37 @@ const Reclamation = () => {
                                                     >
                                                         Nom du patient
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="lucky jesse"
-                                                        id="input-username"
-                                                        placeholder="Username"
+                                                        name="nom"
+                                                        value={reclamationEnCours}
+                                                        onChange={onChangeReclamation}
                                                         type="select"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                             </Col>
                                             <Col lg="6">
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-email"
+                                                        htmlFor="input-username"
                                                     >
                                                         date
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        id="input-email"
-                                                        placeholder="jesse@example.com"
+                                                        name="date"
+                                                        value={reclamationEnCours}
+                                                        onChange={onChangeReclamation}
                                                         type="date"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
+
                                             </Col>
                                         </Row>
                                         <Row>
@@ -174,37 +244,40 @@ const Reclamation = () => {
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-first-name"
+                                                        htmlFor="input-username"
                                                     >
                                                         Montant total
                                                     </label>
-                                                    <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="Lucky"
-                                                        id="input-first-name"
-                                                        placeholder="First name"
-                                                        type="number"
-                                                    />
-                                                </FormGroup>
 
+                                                    <Input
+                                                        name="montant_total"
+                                                        value={reclamationEnCours}
+                                                        onChange={onChangeReclamation}
+                                                        type="number"
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
+                                                </FormGroup>
 
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-last-name"
+                                                        htmlFor="input-username"
                                                     >
-                                                        Montant reclamer
+                                                        description
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="Telephone"
-                                                        id="input-last-name"
-                                                        placeholder="password"
-                                                        type="number"
-                                                    />
+                                                        name="description"
+                                                        value={reclamationEnCours}
+                                                        onChange={onChangeReclamation}
+                                                        type="text"
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
 
-                                                <FormGroup>
+                                                {/*<FormGroup>
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
@@ -217,12 +290,12 @@ const Reclamation = () => {
                                                         placeholder="Last name"
                                                         type="file"
                                                     />
-                                                </FormGroup>
+                                                </FormGroup>*/}
 
 
 
 
-                                                <FormGroup>
+                                                {/*<FormGroup>
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
@@ -235,7 +308,7 @@ const Reclamation = () => {
                                                         placeholder="Last name"
                                                         type="file"
                                                     />
-                                                </FormGroup>
+                                                </FormGroup>*/}
 
 
                                                 <Button
@@ -249,7 +322,7 @@ const Reclamation = () => {
 
                                             </Col>
                                             <Col lg="6">
-                                                <FormGroup>
+                                                {/*<FormGroup>
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
@@ -264,29 +337,31 @@ const Reclamation = () => {
                                                         type="number"
                                                     />
                                                 </FormGroup>
-
+*/}
 
 
                                                 <FormGroup>
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-last-name"
+                                                        htmlFor="input-username"
                                                     >
-                                                        Sexe
+                                                        status
                                                     </label>
+
                                                     <Input
-                                                        className="form-control-alternative"
-                                                        defaultValue="M"
-                                                        id="input-last-name"
-                                                        placeholder="Last name"
+                                                        name="status"
+                                                        value={reclamationEnCours}
+                                                        onChange={onChangeReclamation}
                                                         type="select"
-                                                    />
+                                                    >
+                                                        {/* Assurez-vous d'inclure les options ici */}
+                                                    </Input>
                                                 </FormGroup>
 
 
 
 
-                                                <FormGroup>
+                                                {/*<FormGroup>
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
@@ -299,14 +374,14 @@ const Reclamation = () => {
                                                         placeholder="Last name"
                                                         type="file"
                                                     />
-                                                </FormGroup>
+                                                </FormGroup>*/}
 
 
 
 
 
 
-                                                <FormGroup>
+                                                {/*<FormGroup>
                                                     <label
                                                         className="form-control-label"
                                                         htmlFor="input-last-name"
@@ -319,7 +394,7 @@ const Reclamation = () => {
                                                         placeholder="Last name"
                                                         type="file"
                                                     />
-                                                </FormGroup>
+                                                </FormGroup>*/}
 
 
 
